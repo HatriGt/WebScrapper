@@ -49,8 +49,8 @@ def generate_commits(start_date, end_date, commits_per_day=5):
 
 def main():
     # Set date range (example: last 30 days)
-    end_date = datetime.now() 
-    start_date = end_date - timedelta(days=600)
+    end_date = datetime(2023, 3, 31)
+    start_date = datetime(2020, 3, 22)
     
     # Initialize git if needed
     if not os.path.exists('.git'):
