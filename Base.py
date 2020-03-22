@@ -24,14 +24,24 @@ def generate_commits(start_date, end_date, commits_per_day=5):
     current_date = start_date
     
     while current_date <= end_date:
-        # Randomly decide if we should commit on this day (4/7 chance)
-        if random.randint(1, 7) <= 4:
-            # Random commits for each day
-            # Randomly decide to do more commits (1/3 chance)
-            if random.randint(1, 3) == 1:
-                num_commits = random.randint(3, 8)  # Do 3-8 commits
-            else:
-                num_commits = random.randint(1, commits_per_day)
+        # Get all days in current month
+        month_start = current_date.replace(day=1)
+        if month_start.month == 12:
+            next_month = month_start.replace(year=month_start.year + 1, month=1)
+        else:
+            next_month = month_start.replace(month=month_start.month + 1)
+        
+        # Get 13 random days for this month
+        month_days = []
+        while len(month_days) < 13:
+            day = random.randint(1, (next_month - timedelta(days=1)).day)
+            if day not in month_days:
+                month_days.append(day)
+        
+        # Check if current day is one of the random 13 days
+        if current_date.day in month_days:
+            # Do more than 5 commits
+            num_commits = random.randint(6, 10)
             
             for _ in range(num_commits):
                 # Random time between 9 AM and 6 PM
@@ -49,7 +59,7 @@ def generate_commits(start_date, end_date, commits_per_day=5):
 
 def main():
     # Set date range (example: last 30 days)
-    end_date = datetime(2023, 3, 31)
+    end_date = datetime(2021, 12, 31)
     start_date = datetime(2020, 3, 22)
     
     # Initialize git if needed
