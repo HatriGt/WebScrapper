@@ -27,7 +27,11 @@ def generate_commits(start_date, end_date, commits_per_day=5):
         # Randomly decide if we should commit on this day (4/7 chance)
         if random.randint(1, 7) <= 4:
             # Random commits for each day
-            num_commits = random.randint(1, commits_per_day)
+            # Randomly decide to do more commits (1/3 chance)
+            if random.randint(1, 3) == 1:
+                num_commits = random.randint(3, 8)  # Do 3-8 commits
+            else:
+                num_commits = random.randint(1, commits_per_day)
             
             for _ in range(num_commits):
                 # Random time between 9 AM and 6 PM
